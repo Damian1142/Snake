@@ -12,6 +12,7 @@ import com.mech.input.InputKey;
 public class ViewController extends JFrame {
 
     public static JLabel score;
+    public static ViewController viewController;
     public ViewController() throws HeadlessException {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Snake");
@@ -24,6 +25,7 @@ public class ViewController extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         addKeyListener(new InputKey());
+        viewController = this;
     }
     public MainPanel mainPanel;
 

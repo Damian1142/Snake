@@ -4,6 +4,8 @@ import com.mech.view.*;
 import com.mech.view.przeszkody.Obstacle;
 import com.mech.view.przeszkody.Spawner;
 import lombok.Getter;
+import lombok.Setter;
+
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -11,8 +13,6 @@ import java.util.List;
 
 @Getter
 public class Snake implements Drawing {
-
-    private int wynik = 0;
 
     public Direction getSnakeDirection() {
         return snakeDirection;
@@ -76,12 +76,15 @@ public class Snake implements Drawing {
                 return true;
             }
         }
+        for (Point p: body.subList(1, body.size())){
+            if (p.equals(head)){
+                return true;
+            }
+        }
         return false;
     }
     public void addBody(){
         body.add(new Point(0,0));
-        wynik++;
-        ViewController.score.setText("Wynik: " + wynik);
     }
 
     public boolean eat() {
