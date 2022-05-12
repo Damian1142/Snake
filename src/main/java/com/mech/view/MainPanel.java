@@ -32,8 +32,9 @@ public class MainPanel extends JPanel {
         setFocusable(true);
         addKeyListener(new KeyController());
         addKeyListener(new InputKey());
-        Point head = snake.getBody().get(0);
+
         timer = new Timer(100, e -> {
+            Point head = snake.getBody().get(0);
             if (snake.isCollision()){
                 MainPanel.timer.stop();
                 Spawner.stop();
@@ -48,12 +49,13 @@ public class MainPanel extends JPanel {
                 snake.addBody();
                 pick();
             }
-
             if(head.x < 0){
                 head.setLocation(Board.FIELD_X - 1,head.y);
+                System.out.println("Ponorzej zera X");
             }
             if(head.y < 0){
                 head.setLocation(head.x,Board.FIELD_Y - 1);
+                System.out.println("Ponorzej zera Y");
             }
             if(head.y > Board.FIELD_Y){
                 head.setLocation(head.x,0);
@@ -63,6 +65,7 @@ public class MainPanel extends JPanel {
             }
             ViewController.score.setText("Wynik: " + (snake.getBody().size() - 3));
             repaint();
+            //System.out.println(head.x + "x" + head.y);
         });
         //timer.start();
         addAllComponent();
@@ -128,6 +131,7 @@ public class MainPanel extends JPanel {
         Spawner.food.draw(g);
         for (Drawing d: drawings){
             d.draw(g);
+            //System.out.println(snake.getBody().get(0).x + "x" + snake.getBody().get(0).y);
         }
     }
 

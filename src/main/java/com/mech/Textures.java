@@ -9,4 +9,5 @@ public class Textures {
     public static Sprite wie = new Sprite("textures/wie.png");
     public static Sprite st = new Sprite("textures/st.png");
     public static Sprite exit = new Sprite("textures/exit.png");
+    public static Sprite apple = new Sprite("textures/apple.png");
 }

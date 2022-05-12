@@ -20,7 +20,7 @@ public class Food extends Point implements Drawing {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.GREEN);
+        g.setColor(Color.YELLOW);
         g.fillOval(x * Board.SIZE,y * Board.SIZE,Board.SIZE,Board.SIZE);
 
 
