@@ -1,8 +1,10 @@
 package com.mech.multiplayer;
 
 import com.google.gson.Gson;
+import com.mech.Textures;
 import com.mech.multiplayer.packets.PlayerPacket;
 import com.mech.multiplayer.packets.PlayerPacketType;
+import com.mech.view.Drawing;
 import lombok.SneakyThrows;
 
 import java.awt.*;
@@ -10,10 +12,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class Client implements Runnable{
+public class Client implements Runnable, Drawing {
 
 
-    public Graphics gr;
     private String host;
     private int port;
     private Socket socket;
@@ -24,11 +25,10 @@ public class Client implements Runnable{
     private int id;
     private String name;
 
-    public Client(String host, int port, String name, Graphics g) {
+    public Client(String host, int port, String name) {
         this.host = host;
         this.port = port;
         this.name = name;
-        this.gr = g;
     }
 
     @SneakyThrows
@@ -84,5 +84,14 @@ public class Client implements Runnable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        Map map = listener.maps.poll();
+        if (map != null) {
+            g.drawImage(Textures.grass.getImage(), 0, 0, null);
+            map.draw(g);
+        }
     }
 }

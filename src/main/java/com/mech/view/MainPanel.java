@@ -3,6 +3,7 @@ package com.mech.view;
 import com.mech.Main;
 import com.mech.Textures;
 import com.mech.input.InputKey;
+import com.mech.input.InputKeyM;
 import com.mech.multiplayer.Client;
 import com.mech.snake.Snake;
 import com.mech.view.przeszkody.Obstacle;
@@ -84,6 +85,7 @@ public class MainPanel extends JPanel {
                 e.printStackTrace();
             }
         }).start();
+
         //staticSnake = snake;
     }
 
@@ -110,10 +112,10 @@ public class MainPanel extends JPanel {
                 break;
         }
     }
-
+    Timer tm = new Timer(100,e -> repaint());
+    Client client;
     private void mGameRender(Graphics g) {
-        Client client = new Client("localhost",6500,"mech",g);
-
+        client.draw(g);
 //        Timer timer1 = new Timer(100, e -> {
 //            //Odbieranie
 //        });
@@ -201,9 +203,14 @@ public class MainPanel extends JPanel {
                         }else if (upAndDown == Direction.RIGHT){
                             Main.view.dispose();
                         }
-//                        else if (upAndDown == Direction.DOWN) {
-//                            tryb = Tryb.MGAME;
-//                        }
+                        else if (upAndDown == Direction.DOWN) {
+                            tryb = Tryb.MGAME;
+                            client = new Client("88.156.231.130",6500,"mech");
+                            client.connect();
+                            System.out.println("Łączenie ...");
+                            addKeyListener(new InputKeyM(client));
+                            tm.start();
+                        }
                 }
             }
         }
