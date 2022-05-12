@@ -121,7 +121,8 @@ public class MainPanel extends JPanel {
     Timer tm = new Timer(100,e -> repaint());
     Client client;
     private void mGameRender(Graphics g) {
-        client.draw(g);
+        if (client != null)
+            client.draw(g);
 //        Timer timer1 = new Timer(100, e -> {
 //            //Odbieranie
 //        });
