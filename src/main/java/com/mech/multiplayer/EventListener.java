@@ -31,7 +31,7 @@ public class EventListener {
         } else if (packet.getType() == PlayerPacketType.MAP) {
             Map map = gson.fromJson(packet.getPacket(),Map.class);
             maps.add(map);
-            //System.out.println("mapa");
+            //System.out.println(maps.size());
         }
     }
 }

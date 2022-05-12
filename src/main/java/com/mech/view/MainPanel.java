@@ -14,6 +14,7 @@ import lombok.SneakyThrows;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -65,9 +66,12 @@ public class MainPanel extends JPanel {
                 head.setLocation(0,head.y);
             }
             ViewController.score.setText("Wynik: " + (snake.getBody().size() - 3));
-            repaint();
             //System.out.println(head.x + "x" + head.y);
         });
+        new Thread(() -> {
+            while(true)
+                repaint();
+        }).start();
         //timer.start();
         addAllComponent();
         new Thread(() -> {
@@ -85,7 +89,7 @@ public class MainPanel extends JPanel {
                 e.printStackTrace();
             }
         }).start();
-
+        fps.start();
         //staticSnake = snake;
     }
 
@@ -99,7 +103,8 @@ public class MainPanel extends JPanel {
     public final Snake snake;
     public static Timer timer;
 
-
+    private Timer fps = new Timer(1000, this::actionPerformed);
+    private int frames = 0;
     @Override
     protected void paintComponent(Graphics g) {
         switch (tryb){
@@ -111,6 +116,7 @@ public class MainPanel extends JPanel {
             case MGAME: mGameRender(g);
                 break;
         }
+        frames++;
     }
     Timer tm = new Timer(100,e -> repaint());
     Client client;
@@ -179,6 +185,11 @@ public class MainPanel extends JPanel {
         clip.start();
     }
 
+    private void actionPerformed(ActionEvent e) {
+        System.out.println(frames);
+        frames = 0;
+    }
+
     private class KeyController extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
@@ -205,8 +216,7 @@ public class MainPanel extends JPanel {
                         }
                         else if (upAndDown == Direction.DOWN) {
                             tryb = Tryb.MGAME;
-                            client = new Client("88.156.231.130",6500,"mech");
-                            client.connect();
+                            client = new Client("88.156.231.130",6500,"Mech");
                             System.out.println("Łączenie ...");
                             addKeyListener(new InputKeyM(client));
                             tm.start();

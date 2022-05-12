@@ -1,16 +1,18 @@
 package com.mech.multiplayer;
 
 import com.google.gson.Gson;
+import com.mech.Main;
 import com.mech.Textures;
 import com.mech.multiplayer.packets.PlayerPacket;
 import com.mech.multiplayer.packets.PlayerPacketType;
 import com.mech.view.Drawing;
 import lombok.SneakyThrows;
 
+import javax.swing.*;
 import java.awt.*;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client implements Runnable, Drawing {
 
@@ -25,10 +27,13 @@ public class Client implements Runnable, Drawing {
     private int id;
     private String name;
 
+    @SneakyThrows
     public Client(String host, int port, String name) {
         this.host = host;
         this.port = port;
-        this.name = name;
+        Thread.sleep(2000);
+        this.name = JOptionPane.showInputDialog(Main.view,"Podaj Nazwę","Podaj Nazwę", JOptionPane.INFORMATION_MESSAGE);
+        connect();
     }
 
     @SneakyThrows

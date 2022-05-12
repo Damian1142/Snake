@@ -12,7 +12,6 @@ public class ViewController extends JFrame {
         super();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("Snake");
-
         score = new JLabel("Wynik: 0", SwingConstants.CENTER);
         mainPanel = new MainPanel();
         add(mainPanel);
@@ -24,15 +23,23 @@ public class ViewController extends JFrame {
     }
     public MainPanel mainPanel;
 }
-//class GameMenu extends JDialog {
+//class InputName extends JDialog {
 //
-//    public GameMenu(Frame owner) {
-//        super(owner,"Tryb Gry",true);
-//        setSize(new Dimension(600,300));
+//    public InputName(Frame owner) {
+//        super(owner,"Wpisz nazwę",true);
+//        setSize(new Dimension(200,300));
 //        setResizable(false);
 //        setLocationRelativeTo(null);
-//        JLabel jLabel = new JLabel("Wybierz tryb Gry",SwingConstants.CENTER);
+//        JLabel jLabel = new JLabel("Wpisz nazwę",SwingConstants.CENTER);
+//        JButton jButton = new JButton("OK");
+//        jButton.addActionListener(e -> {setName(jLabel.getText()); setVisible(false);});
 //        jLabel.setFont(new Font("Arial", Font.PLAIN,30));
+//        JTextField jTextField = new JTextField();
+//        jTextField.setFont(new Font("Arial", Font.PLAIN,30));
+//        jTextField.setSize(280,40);
 //        add(jLabel, BorderLayout.NORTH);
+//        add(jTextField, BorderLayout.CENTER);
+//        add(jButton,BorderLayout.SOUTH);
+//
 //    }
-//}
+
