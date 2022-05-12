@@ -21,7 +21,7 @@ public class InputKey extends KeyAdapter {
             case KeyEvent.VK_UP:
             case KeyEvent.VK_W: {
                 if (Main.view.mainPanel.snake.getSnakeDirection() != Direction.DOWN)
-                Main.view.mainPanel.snake.setSnakeDirection(Direction.UP);
+                    Main.view.mainPanel.snake.setSnakeDirection(Direction.UP);
                 break;
             }
             case KeyEvent.VK_DOWN:

@@ -1,7 +1,8 @@
 package com.mech.multiplayer;
 ;
-import com.mech.packets.PlayerPacket;
-import com.mech.packets.PlayerPacketType;
+import com.google.gson.Gson;
+import com.mech.multiplayer.packets.PlayerPacket;
+import com.mech.multiplayer.packets.PlayerPacketType;
 
 public class EventListener {
 
@@ -21,6 +22,10 @@ public class EventListener {
         } else if (packet.getType() == PlayerPacketType.ID) {
             if(!packet.getName().equals("ID")) throw new RuntimeException("Błędne Odpowiedzi Serwera");
             client.setId(packet.getId());
+        } else if (packet.getType() == PlayerPacketType.MAP) {
+            Gson gson = new Gson();
+            Map map = gson.fromJson(packet.getPacket(),Map.class);
+            map.draw(client.gr);
         }
     }
 }

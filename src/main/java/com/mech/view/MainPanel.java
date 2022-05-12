@@ -1,26 +1,37 @@
 package com.mech.view;
 
-import java.awt.*;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import javax.sound.sampled.*;
-import javax.swing.*;
 import com.mech.Main;
+import com.mech.Textures;
 import com.mech.input.InputKey;
+import com.mech.multiplayer.Client;
 import com.mech.snake.Snake;
 import com.mech.view.przeszkody.Obstacle;
 import com.mech.view.przeszkody.SpawnType;
 import com.mech.view.przeszkody.Spawner;
 import lombok.SneakyThrows;
 
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+
 public class MainPanel extends JPanel {
+
+    Tryb tryb;
     @SneakyThrows
     public MainPanel() {
+        tryb = Tryb.MENU;
         drawings = new ArrayList<>();
         setPreferredSize(new Dimension(Board.MAX_X,Board.MAX_Y));
         snake = new Snake();
         Spawner.start();
+        setFocusable(true);
+        addKeyListener(new KeyController());
+        addKeyListener(new InputKey());
         Point head = snake.getBody().get(0);
         timer = new Timer(100, e -> {
             if (snake.isCollision()){
@@ -28,7 +39,7 @@ public class MainPanel extends JPanel {
                 Spawner.stop();
                 int odp = JOptionPane.showConfirmDialog(null,"    Przegrałeś!\nZ Wynikiem " + (snake.getBody().size() - 3) + " Punktów\n  Czy Zresetować?","Game Over", JOptionPane.YES_NO_OPTION,JOptionPane.INFORMATION_MESSAGE);
                 if ( odp == JOptionPane.YES_OPTION) InputKey.reset();
-                else if (odp == JOptionPane.CLOSED_OPTION)Main.view.dispose();
+                else goMenu();
             } else {
                 snake.move();
             }
@@ -53,7 +64,7 @@ public class MainPanel extends JPanel {
             ViewController.score.setText("Wynik: " + (snake.getBody().size() - 3));
             repaint();
         });
-        timer.start();
+        //timer.start();
         addAllComponent();
         new Thread(() -> {
             try {
@@ -72,17 +83,45 @@ public class MainPanel extends JPanel {
         }).start();
         //staticSnake = snake;
     }
+
+    private void goMenu() {
+        tryb = Tryb.MENU;
+        timer.stop();
+    }
     //public static Snake staticSnake;
 
     private static ArrayList<Drawing> drawings;
     public final Snake snake;
     public static Timer timer;
 
-    private Sprite grass = new Sprite("textures/grass.png");
+
     @Override
     protected void paintComponent(Graphics g) {
-        //Board.draw(g);
-        g.drawImage(grass.getImage(),0,0,Board.MAX_X,Board.MAX_Y,null);
+        switch (tryb){
+
+            case MENU: menuRender(g);
+                break;
+            case GAME: gameRender(g);
+                break;
+            case MGAME: mGameRender(g);
+                break;
+        }
+    }
+
+    private void mGameRender(Graphics g) {
+        Client client = new Client("localhost",6500,"mech",g);
+
+//        Timer timer1 = new Timer(100, e -> {
+//            //Odbieranie
+//        });
+//        Timer timer2 = new Timer(100, e -> {
+//            //Wysyłanie
+//        });
+    }
+
+
+    private void gameRender(Graphics g) {
+        g.drawImage(Textures.grass.getImage(),0,0,Board.MAX_X,Board.MAX_Y,null);
         for (Obstacle p : Spawner.przeszkody){
             p.draw(g);
         }
@@ -90,8 +129,30 @@ public class MainPanel extends JPanel {
         for (Drawing d: drawings){
             d.draw(g);
         }
-
     }
+
+
+    private Direction upAndDown = Direction.UP;
+    private void menuRender(Graphics g){
+        g.drawImage(Textures.tlo.getImage(),0,0,Board.MAX_X,Board.MAX_Y,null);
+        g.drawImage(Textures.jed.getImage(), 100, 300,640,80,null);
+        g.drawImage(Textures.wie.getImage(), 100, 400,640,80,null);
+        g.drawImage(Textures.exit.getImage(), 165,485,640,80,null);
+
+        switch (upAndDown){
+
+            case UP: g.drawImage(Textures.st.getImage(),740,300,80,80,null);
+                break;
+            case DOWN: g.drawImage(Textures.st.getImage(),740,400,80,80,null);
+                break;
+            case RIGHT: g.drawImage(Textures.st.getImage(),740,485,80,80,null);
+                break;
+            default:
+                break;
+        }
+        repaint();
+    }
+
     public static void addDrawings(Drawing d){
         drawings.add(d);
     }
@@ -111,4 +172,37 @@ public class MainPanel extends JPanel {
         clip.open(pickIn);
         clip.start();
     }
+
+    private class KeyController extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent e) {
+            if (tryb == Tryb.MENU){
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP:
+                        if (upAndDown == Direction.DOWN)
+                            upAndDown = Direction.UP;
+                        else if (upAndDown == Direction.RIGHT)
+                            upAndDown = Direction.DOWN;
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        if (upAndDown == Direction.UP)
+                            upAndDown = Direction.DOWN;
+                        else
+                            upAndDown = Direction.RIGHT;
+                        break;
+                    case KeyEvent.VK_ENTER:
+                        if (upAndDown == Direction.UP) {
+                            tryb = Tryb.GAME;
+                            InputKey.reset();
+                        }else if (upAndDown == Direction.RIGHT){
+                            Main.view.dispose();
+                        }
+//                        else if (upAndDown == Direction.DOWN) {
+//                            tryb = Tryb.MGAME;
+//                        }
+                }
+            }
+        }
+    }
 }
+

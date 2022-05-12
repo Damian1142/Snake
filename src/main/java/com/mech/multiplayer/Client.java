@@ -1,18 +1,19 @@
 package com.mech.multiplayer;
 
 import com.google.gson.Gson;
-import com.mech.packets.PlayerPacket;
-import com.mech.packets.PlayerPacketType;
+import com.mech.multiplayer.packets.PlayerPacket;
+import com.mech.multiplayer.packets.PlayerPacketType;
 import lombok.SneakyThrows;
 
+import java.awt.*;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.List;
 
 public class Client implements Runnable{
 
 
+    public Graphics gr;
     private String host;
     private int port;
     private Socket socket;
@@ -23,11 +24,11 @@ public class Client implements Runnable{
     private int id;
     private String name;
 
-    public Client(String host, int port,String name) {
+    public Client(String host, int port, String name, Graphics g) {
         this.host = host;
         this.port = port;
         this.name = name;
-
+        this.gr = g;
     }
 
     @SneakyThrows
