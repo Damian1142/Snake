@@ -1,6 +1,7 @@
 package com.mech.input;
 
 import com.google.gson.Gson;
+import com.mech.Main;
 import com.mech.multiplayer.Client;
 import com.mech.multiplayer.packets.PlayerPacket;
 import com.mech.multiplayer.packets.PlayerPacketType;
@@ -56,6 +57,8 @@ public class InputKeyM extends KeyAdapter {
                 break;
             }
             case KeyEvent.VK_ESCAPE: {
+                client.closeConnection();
+                Main.view.mainPanel.goMenu();
                 break;
             }
         }

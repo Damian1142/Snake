@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.Scanner;
 
 public class Client implements Runnable, Drawing {
@@ -60,7 +61,8 @@ public class Client implements Runnable, Drawing {
     @SneakyThrows
     public void sendObject(PlayerPacket packet){
         Gson gson = new Gson();
-        out.writeObject(gson.toJson(packet));
+        if (running)
+            out.writeObject(gson.toJson(packet));
 
     }
 
@@ -68,10 +70,16 @@ public class Client implements Runnable, Drawing {
     @Override
     public void run() {
         running = true;
-        while (running){
+        while (running) {
             Gson gson = new Gson();
-            PlayerPacket data = gson.fromJson((String) in.readObject(), PlayerPacket.class);
-            listener.received(data);
+            PlayerPacket data = null;
+            try {
+                data = gson.fromJson((String) in.readObject(), PlayerPacket.class);
+            } catch (SocketException ignored) {
+
+            }
+            if (data != null)
+                listener.received(data);
         }
     }
 

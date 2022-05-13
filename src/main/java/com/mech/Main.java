@@ -1,11 +1,8 @@
 package com.mech;
 
-import com.mech.multiplayer.Client;
-import com.mech.view.Sprite;
 import com.mech.view.ViewController;
 import lombok.SneakyThrows;
 
-import javax.swing.event.CaretListener;
 import java.awt.*;
 
 public class Main {

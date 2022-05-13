@@ -93,7 +93,7 @@ public class MainPanel extends JPanel {
         //staticSnake = snake;
     }
 
-    private void goMenu() {
+    public void goMenu() {
         tryb = Tryb.MENU;
         timer.stop();
     }
@@ -214,11 +214,12 @@ public class MainPanel extends JPanel {
                             InputKey.reset();
                         }else if (upAndDown == Direction.RIGHT){
                             Main.view.dispose();
+                            System.exit(0);
                         }
                         else if (upAndDown == Direction.DOWN) {
                             tryb = Tryb.MGAME;
-                            client = new Client("88.156.231.130",6500,"Mech");
                             System.out.println("Łączenie ...");
+                            client = new Client("88.156.231.130",6500,"Mech");
                             addKeyListener(new InputKeyM(client));
                             tm.start();
                         }
