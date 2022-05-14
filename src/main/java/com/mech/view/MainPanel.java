@@ -23,6 +23,7 @@ import java.util.ArrayList;
 
 public class MainPanel extends JPanel {
 
+    public static Clip clip;
     Tryb tryb;
     @SneakyThrows
     public MainPanel() {
@@ -74,21 +75,21 @@ public class MainPanel extends JPanel {
         }).start();
         //timer.start();
         addAllComponent();
-        new Thread(() -> {
+       //new Thread(() -> {
             try {
                 // Open an audio input stream.
                 URL url = this.getClass().getClassLoader().getResource("songs/YourLove.wav");
                 assert url != null;
                 AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
                 // Get a sound clip resource.
-                Clip clip = AudioSystem.getClip();
+                clip = AudioSystem.getClip();
                 // Open audio clip and load samples from the audio input stream.
                 clip.open(audioIn);
                 clip.loop(10000);
             } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
                 e.printStackTrace();
             }
-        }).start();
+        //});
         fps.start();
         //staticSnake = snake;
     }

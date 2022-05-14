@@ -27,19 +27,19 @@ public class InputKey extends KeyAdapter {
             case KeyEvent.VK_DOWN:
             case KeyEvent.VK_S: {
                 if (Main.view.mainPanel.snake.getSnakeDirection() != Direction.UP)
-                Main.view.mainPanel.snake.setSnakeDirection(Direction.DOWN);
-                    break;
+                    Main.view.mainPanel.snake.setSnakeDirection(Direction.DOWN);
+                break;
             }
             case KeyEvent.VK_LEFT:
             case KeyEvent.VK_A: {
                 if (Main.view.mainPanel.snake.getSnakeDirection() != Direction.RIGHT)
-                Main.view.mainPanel.snake.setSnakeDirection(Direction.LEFT);
+                    Main.view.mainPanel.snake.setSnakeDirection(Direction.LEFT);
                 break;
             }
             case KeyEvent.VK_RIGHT:
             case KeyEvent.VK_D: {
                 if (Main.view.mainPanel.snake.getSnakeDirection() != Direction.LEFT)
-                Main.view.mainPanel.snake.setSnakeDirection(Direction.RIGHT);
+                    Main.view.mainPanel.snake.setSnakeDirection(Direction.RIGHT);
                 break;
             }
             case KeyEvent.VK_ESCAPE: {
@@ -56,6 +56,11 @@ public class InputKey extends KeyAdapter {
             }
             case KeyEvent.VK_R: {
                 reset();
+            }
+            case KeyEvent.VK_P: {
+                if(MainPanel.clip.isRunning())
+                    MainPanel.clip.stop();
+                else MainPanel.clip.loop(100);
             }
         }
     }
