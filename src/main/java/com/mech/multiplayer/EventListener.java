@@ -1,6 +1,7 @@
 package com.mech.multiplayer;
 ;
 import com.google.gson.Gson;
+import com.mech.Main;
 import com.mech.multiplayer.packets.PlayerPacket;
 import com.mech.multiplayer.packets.PlayerPacketType;
 
@@ -31,7 +32,7 @@ public class EventListener {
         } else if (packet.getType() == PlayerPacketType.MAP) {
             Map map = gson.fromJson(packet.getPacket(),Map.class);
             maps.add(map);
-            //System.out.println(maps.size());
+            System.out.println(maps.size());
         }
     }
 }

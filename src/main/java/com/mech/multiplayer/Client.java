@@ -35,6 +35,7 @@ public class Client implements Runnable {
         this.port = port;
         Thread.sleep(2000);
         this.name = JOptionPane.showInputDialog(Main.view,"Podaj Nazwę","Podaj Nazwę", JOptionPane.INFORMATION_MESSAGE);
+        Main.view.mainPanel.snake.name = this.name;
         connect();
     }
 
