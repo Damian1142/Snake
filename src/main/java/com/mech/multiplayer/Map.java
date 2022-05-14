@@ -24,8 +24,8 @@ public class Map {
             foods.forEach(f -> f.draw(g,p));
         if(snakes != null)
             snakes.forEach(s -> {
-                snakes.forEach(snake -> System.out.println(snake.name));
-                System.out.println(Main.view.mainPanel.snake.name);
+                //snakes.forEach(snake -> System.out.println(snake.name));
+                //System.out.println(Main.view.mainPanel.snake.name);
                 if (!s.name.equals(Main.view.mainPanel.snake.name)) {
                     s.setColor(Color.ORANGE);
                     s.draw(g,p);
