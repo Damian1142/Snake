@@ -23,4 +23,8 @@ public class Obstacle extends Point implements Drawing {
         g.setColor(Color.MAGENTA);
         g.fillRect(x * Board.SIZE,y * Board.SIZE, Board.SIZE,Board.SIZE);
     }
+    public void draw(Graphics g,Point c) {
+        g.setColor(Color.MAGENTA);
+        g.fillRect((x - c.x) * Board.SIZE,(y - c.y) * Board.SIZE, Board.SIZE,Board.SIZE);
+    }
 }

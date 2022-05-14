@@ -18,6 +18,15 @@ public class Snake implements Drawing {
         return snakeDirection;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+    public String name = "";
+    private Color color = Color.blue;
     public void setSnakeDirection(Direction snakeDirection) {
         this.snakeDirection = snakeDirection;
     }
@@ -58,12 +67,20 @@ public class Snake implements Drawing {
 
     @Override
     public void draw(Graphics g) {
-        g.setColor(Color.BLUE);
+        g.setColor(color);
         for (Point p: body.subList(1,body.size())){
             g.fillRect(p.x * Board.SIZE,p.y * Board.SIZE,Board.SIZE,Board.SIZE);
         }
         g.setColor(Color.WHITE);
         g.fillRect(body.get(0).x * Board.SIZE,body.get(0).y * Board.SIZE,Board.SIZE,Board.SIZE);
+    }
+    public void draw(Graphics g,Point c) {
+        g.setColor(color);
+        for (Point p: body.subList(1,body.size())){
+            g.fillRect((p.x - c.x) * Board.SIZE,(p.y - c.y) * Board.SIZE,Board.SIZE,Board.SIZE);
+        }
+        g.setColor(Color.WHITE);
+        g.fillRect((body.get(0).x - c.x) * Board.SIZE,(body.get(0).y -c.y) * Board.SIZE,Board.SIZE,Board.SIZE);
     }
 
     public boolean isCollision() {
@@ -91,4 +108,5 @@ public class Snake implements Drawing {
         Point head = body.get(0);
         return Spawner.food.getLocation().equals(head);
     }
+
 }

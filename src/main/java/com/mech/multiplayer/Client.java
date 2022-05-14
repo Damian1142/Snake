@@ -15,7 +15,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.Scanner;
 
-public class Client implements Runnable, Drawing {
+public class Client implements Runnable {
 
 
     private String host;
@@ -99,12 +99,11 @@ public class Client implements Runnable, Drawing {
         this.name = name;
     }
 
-    @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g,Point p) {
         Map map = listener.maps.poll();
         if (map != null) {
-            g.drawImage(Textures.grass.getImage(), 0, 0, null);
-            map.draw(g);
+            g.drawImage(Textures.grass.getImage(), -p.x, -p.y, null);
+            map.draw(g,p);
         }
     }
 }
