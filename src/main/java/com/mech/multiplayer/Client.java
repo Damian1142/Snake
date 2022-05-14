@@ -5,6 +5,7 @@ import com.mech.Main;
 import com.mech.Textures;
 import com.mech.multiplayer.packets.PlayerPacket;
 import com.mech.multiplayer.packets.PlayerPacketType;
+import com.mech.view.Board;
 import com.mech.view.Drawing;
 import lombok.SneakyThrows;
 
@@ -102,7 +103,9 @@ public class Client implements Runnable {
     public void draw(Graphics g,Point p) {
         Map map = listener.maps.poll();
         if (map != null) {
-            g.drawImage(Textures.grass.getImage(), -p.x, -p.y, null);
+            g.setColor(new Color(0x8b));
+            g.fillRect(-40,-40,5300,3000);
+            g.drawImage(Textures.bigGrass.getImage(), -p.x * Board.SIZE, -p.y * Board.SIZE, null);
             map.draw(g,p);
         }
     }

@@ -188,7 +188,7 @@ public class MainPanel extends JPanel {
     }
 
     private void actionPerformed(ActionEvent e) {
-        System.out.println(frames);
+        System.out.println("FPS: " + frames);
         frames = 0;
     }
 
